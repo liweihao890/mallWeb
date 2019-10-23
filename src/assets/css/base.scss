@@ -1,0 +1,73 @@
+
+@import "./normalize.scss";
+$font_family: "Helvetica Neue",
+Helvetica,
+"PingFang SC",
+"Hiragino Sans GB",
+"Microsoft YaHei",
+"微软雅黑",
+Arial,
+sans-serif;
+
+$color_text      : #666;
+$color_high-text : #ff5777;
+$color_tint      : #ff8198;
+$color_background: #fff;
+$font_size       : 14px;
+$line_height     : 1.5;
+
+
+
+
+* {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+
+    &::before {
+        margin    : 0;
+        padding   : 0;
+        box-sizing: border-box;
+    }
+
+    &::after {
+        margin    : 0;
+        padding   : 0;
+        box-sizing: border-box;
+    }
+}
+
+body {
+    font-family                : $font_family;
+    user-select                : none;
+    -webkit-tap-highlight-color: transparent;
+    background                 : var(--color-background);
+    color                      : $color_text;
+    width                      : 100vw;
+}
+
+a {
+    color          : $color_text;
+    text-decoration: none;
+}
+
+.clear-fix {
+    &::after {
+        clear     : both;
+        content   : '';
+        display   : block;
+        width     : 0;
+        height    : 0;
+        visibility: hidden;
+    }
+
+    zoom: 1;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
