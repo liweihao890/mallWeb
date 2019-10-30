@@ -18,7 +18,14 @@ $color_low: #5EA732;
 $color_good: #F13E3A;
 $font_size       : 14px;
 $line_height     : 1.5;
-
+@mixin content_height($bottom_px){
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: $bottom_px;
+}
 
 @mixin betterBackgroundColor($is_better){
     color: #fff;

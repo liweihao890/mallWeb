@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" ref="wrapper">
-    <div class="content">
+    <div>
       <slot></slot>
     </div>
   </div>
@@ -41,8 +41,11 @@ export default {
     if (this.probeType === 2 || this.probeType === 3) {
       //2.1 监听滚动的位置事件
       this.scroll.on("scroll", position => {
-        //将当前滚动到的位置传出去
+        if(position !== undefined){
+          //将当前滚动到的位置传出去
         this.$emit("scroll", position);
+        }
+        
       });
     }
     //3 监听上拉加载事件

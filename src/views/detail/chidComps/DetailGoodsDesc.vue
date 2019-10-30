@@ -8,7 +8,7 @@
     
     <div class="desc_key">{{ goodsDesc.key }}</div>
     <div class="desc_gallery">
-        <img :src="item" v-for="(item, index) in goodsDesc.img " :key="index">
+        <img :src="item" v-for="(item, index) in goodsDesc.img " :key="index" @load="imgLoad">
     </div>
   </div>
 </template>
@@ -23,7 +23,26 @@ export default {
         return {};
       }
     }
-  }
+  },
+  data(){
+    return {
+      counter: 0,
+      imgLength: 0,
+    }
+  },
+  methods:{
+    imgLoad(){
+      if( ++this.counter === this.imgLength){
+        this.$emit('imageLoad')
+      }
+    },
+  },
+  watch: {
+    goodsDesc(){
+      // 获取图片的个数
+      this.imgLength = this.goodsDesc.img.length;
+    }
+  },
 };
 </script>
 
