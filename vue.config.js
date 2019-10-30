@@ -21,8 +21,8 @@ module.exports = {
    // CSS 相关选项
    css: {
     // 将组件内的 CSS 提取到一个单独的 CSS 文件 (只用在生产环境中)
-    extract: true,
-
+    extract: false,
+   
     // 是否开启 CSS source map？
     sourceMap: false,
 

@@ -8,14 +8,40 @@ Helvetica,
 "微软雅黑",
 Arial,
 sans-serif;
-
+ $color_title: #222;
+$color_border: #f2f5f8;
 $color_text      : #666;
 $color_high-text : #ff5777;
 $color_tint      : #ff8198;
 $color_background: #fff;
+$color_low: #5EA732;
+$color_good: #F13E3A;
 $font_size       : 14px;
 $line_height     : 1.5;
+@mixin content_height($bottom_px){
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: $bottom_px;
+}
 
+@mixin betterBackgroundColor($is_better){
+    color: #fff;
+    text-align: center;
+    @if $is_better{background-color: $color_good;}
+    @else{background-color: $color_low;}
+}
+@mixin betterColor($is_better){
+    
+    @if $is_better{color: $color_good;}
+    @else{color: $color_low;}
+}
+@mixin borderBottom($border_px){
+    border-bottom: $border_px solid $color_border;
+    
+}
 
 
 

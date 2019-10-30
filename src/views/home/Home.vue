@@ -41,15 +41,15 @@ import NavBar from "components/common/navbar/NavBar";
 import Scroll from "components/common/scroll/Scroll";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
-import BackTop from "components/content/backTop/BackTop";
 // 导入子组件
 import HomeSwiper from "./childComps/HomeSwiper";
 import RecommendView from "./childComps/RecommendView";
 import FeatureView from "./childComps/FeatureView";
 // 导入请求方法
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
-import { debounce } from "common/utils";
+import {itemListenerMixin,backTop} from "common/mixin"
 export default {
+  mixins: [itemListenerMixin,backTop], 
   data() {
     return {
       banners: [],
@@ -61,10 +61,10 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: "pop",
-      isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
-      saveY: 0
+      saveY: 0,
+      
     };
   },
   computed: {
@@ -80,7 +80,6 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
-    BackTop
   },
   created() {
     //获取主页上的多个数据
@@ -91,10 +90,6 @@ export default {
     this.getHomeGoods("new");
     //获取精品商品的数据
     this.getHomeGoods("sell");
-  },
-
-  mounted() {
-    this.refresh();
   },
 
   methods: {
@@ -136,8 +131,8 @@ export default {
     //组件scroll的方法
     //根据当前滚动的位置实现回到顶部的图标是否显示,tabControl是否吸顶
     contentScroll(position) {
-      //判断图标是否显示
-      this.isShowBackTop = -position.y > 1000;
+      //根据位置判断返回首页图标的显示
+      this.isShowBack(-position.y);
       //判断tabControl是否吸顶
       this.isTabFixed = -position.y > this.tabOffsetTop;
       // console.log(this.isTabFixed)
@@ -149,18 +144,6 @@ export default {
       // console.log(this.currentType)
       //启用完成加载事件，并且以后都可以不断加载，而不是一次加载就没了
       this.$refs.scroll.finishPullUp();
-    },
-    //更新可滚动高度计算的功能
-    refresh() {
-      //时刻监听goodsItem图片加载完成事件,实时更新better-scroll的计算高度功能
-      // this.$bus.$on("imgLoadFinish", () => {
-      //   this.$refs.scroll.refresh();
-      // });
-      //以上的方法每加载一次就更新，次数太过频繁，可以进行防抖操作，减少压力，提高性能
-      const refresh = debounce(this.$refs.scroll.refresh, 50);
-      this.$bus.$on("imgLoadFinish", () => {
-        refresh();
-      });
     },
 
     /*网络请求获取数据 */
@@ -190,23 +173,16 @@ export default {
         .catch(err => console.log(err));
     }
   },
-  /*home进入页面的位置信息记录 */
-  // beforeRouteEnter(to, from, next) {
-  //   if (from.path == "/" && from.path == "/home") {
-  //     next(false);
-  //   }
-  //   next(vm => {
-  //     vm.$refs.scroll.scrollTo(0, vm.saveY, 0);
-  //     vm.$refs.scroll.refresh();
-  //   });
-  // },
   activated(){
     this.$refs.scroll.scrollTo(0, this.saveY, 0);
      this.$refs.scroll.refresh();
   },
   //离开页面时，将saveY修改为当前滚动的位置
   deactivated() {
+    //保存Y值
     this.saveY = this.$refs.scroll.getScrollY();
+    //取消事件总线监听
+    this.$bus.$off('imgLoadFinish',this.itemImgListener)
   }
 };
 </script>
@@ -230,12 +206,7 @@ export default {
 }
 
 .content {
-  overflow: hidden;
-  position: absolute;
-  top: 44px;
-  bottom: 49px;
-  left: 0;
-  right: 0;
+  @include content_height(49px);
 }
 
 .tab-control2 {
