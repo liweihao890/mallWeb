@@ -206,7 +206,7 @@ export default {
 }
 
 .content {
-  @include content_height(49px);
+  @include content_height(44px);
 }
 
 .tab-control2 {
@@ -215,7 +215,7 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
-  top: 44px;
+  top: 40px;
 }
 
 /*.content {*/
