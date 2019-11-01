@@ -41,6 +41,7 @@ import {
 } from "network/detail.js";
 import { itemListenerMixin, backTop } from "common/mixin";
 import { debounce } from "common/utils";
+import {mapActions} from 'vuex';
 
 export default {
   name: "detail",
@@ -115,6 +116,8 @@ export default {
   },
 
   methods: {
+    //将vuex状态管理器中的方法映射到这里
+    ...mapActions(['addToCartList']),
     // 封装网络请求方法,根据id获取数据
     getDetailInfo(iid) {
       getDetailInfo(iid).then(res => {
@@ -189,7 +192,13 @@ export default {
       product.price = this.goodInfo.realPrice;
       product.iid = this.iid;
       //将商品信息发送到状态管理器
-      this.$store.dispatch("addToCartList", product);
+      // this.$store.dispatch("addToCartList", product).then(res => console.log(res));
+      this.addToCartList(product).then(res => {
+        
+        this.$toast.show(res,2000)
+        
+      }
+      )
     }
   }
 };

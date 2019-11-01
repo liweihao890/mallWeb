@@ -46,7 +46,7 @@ export default {
   font-size: 15px;
   display: flex;
   text-align: center;
-  position: sticky;
+  
   top: 100px;
   .tab-control-item {
     flex: 1;

@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="toDetail">
-    <img :src="showImage" @load="loadFinish" />
+    <img v-lazy="showImage" @load="loadFinish" />
     <div class="goods-info">
       <p >{{ goodsItem.title}}</p>
       <span class="price">{{ goodsItem.price}}</span>
@@ -40,7 +40,7 @@ export default {
 <style scoped lang="scss">
 .goods-item {
   padding-bottom: 40px;
-  width: 48%;
+  width: 175px;
   position: relative;
   img {
     width: 100%;

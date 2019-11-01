@@ -20,8 +20,9 @@ export default {
 
 <style scoped lang="scss">
 .nav-bar {
+  font-size: 24px;
   display: flex;
-  height: 44px;
+  height: 46px;
   line-height: 44px;
   text-align: center;
   box-shadow: 0 1px 1px rgba(100, 100, 100, 0.1);
